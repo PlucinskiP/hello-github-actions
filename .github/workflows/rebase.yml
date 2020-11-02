@@ -12,7 +12,7 @@ on:
 
 jobs:
   merge_automated_PR:
-    name: success-check
+    
     if: contains(github.event.pull_request.labels.*.name, 'automated_pr')
 
     runs-on: ubuntu-latest
@@ -22,10 +22,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Check
-      uses: arup-group/action-all-checks-passed@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Validate Release
+      uses: xembly/validate-workflow-status@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Github Actions, you do not need to create your own token
+        workflow: A workflow for my Hello World file
+        branch: master    #optional
+        status: success  # optional
 
     - name: Auto approve
       uses: hmarr/auto-approve-action@v2.0.0
