@@ -1,6 +1,9 @@
-name: Merge automated PR to branch development
+name: testing autoapprove
 
 on:
+  check_suite:
+    types: 
+      - completed
   pull_request:
     branches:
       - master
@@ -14,21 +17,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Wait for Hello
-      uses: fountainhead/action-wait-for-check@v1.0.0
-      id: wait-for-Terraform
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        checkName: Hello world action
-        ref: ${{ github.event.pull_request.head.sha || github.sha }}
-
-    - name: automerge
-      if: steps.wait-for-Terraform.outputs.conclusion == 'success'
-      uses: "pascalgn/automerge-action@v0.12.0"
+    - name: All checks passed
+      uses: arup-group/action-all-checks-passed@master
       env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        MERGE_LABELS: "automated_pr"
-        MERGE_DELETE_BRANCH: "true"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Auto approve
+      uses: hmarr/auto-approve-action@v2.0.0
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
