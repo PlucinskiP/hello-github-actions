@@ -12,6 +12,7 @@ on:
 
 jobs:
   merge_automated_PR:
+    name: success-check
     if: contains(github.event.pull_request.labels.*.name, 'automated_pr')
 
     runs-on: ubuntu-latest
@@ -21,7 +22,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: All checks passed
+    - name: Check
       uses: arup-group/action-all-checks-passed@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
