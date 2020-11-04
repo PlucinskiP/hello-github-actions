@@ -1,6 +1,6 @@
 
 FROM python:3-slim AS builder
-ADD python_checks /app
+ADD . /app
 WORKDIR /app
 
 RUN pip install --target=/app requests
