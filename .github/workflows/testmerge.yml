@@ -1,34 +1,23 @@
-name: Merge automated PR to branch development
+name: Merge automated PR
 
 on:
-  pull_request:
-    branches:
-      - master
-    types:
-      - labeled
+  status
 
 jobs:
   merge_automated_PR:
-    if: contains(github.event.pull_request.labels.*.name, 'automated_pr')
 
+# Czy status jes succes??
+    if: contains(github.event.status.state.*.name, 'success')
+
+# Jeśli status success szukamy PR
     runs-on: ubuntu-latest
 
     steps:
+
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Wait for Hello
-      uses: fountainhead/action-wait-for-check@v1.0.0
-      id: wait-for-Terraform
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        checkName: Hello world action
-        ref: ${{ github.event.pull_request.head.sha || github.sha }}
-
-    - name: automerge
-      if: steps.wait-for-Terraform.outputs.conclusion == 'success'
-      uses: "pascalgn/automerge-action@v0.12.0"
+    - name: Debug
+      run: echo $EVT
       env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        MERGE_LABELS: "automated_pr"
-        MERGE_DELETE_BRANCH: "true"
+        EVT: ${{ toJSON(github.event.status) }}
