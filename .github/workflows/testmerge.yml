@@ -1,23 +1,26 @@
-name: Merge automated PR
+name: My test action
 
 on:
-  status
+  push
 
 jobs:
-  merge_automated_PR:
+  my_test_action :
 
-# Czy status jes succes??
-    if: contains(github.event.status.state.*.name, 'success')
+#    if: contains(github.event.status.state.*.name, 'success')
 
-# Jeśli status success szukamy PR
     runs-on: ubuntu-latest
 
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2 # checkout the repository content to github runner
 
-    - name: Debug
-      run: echo $EVT
+    - name: setup python
+      uses: actions/setup-python@v2
+
+    - name: execute py script # run the run.py
+      run: |
+        python run.py
       env:
-        EVT: ${{ toJSON(github.event.status) }}
+        COMMIT_SHA: ${{ github.event.push.commits.sha }} 
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
