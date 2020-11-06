@@ -20,7 +20,8 @@ jobs:
 
     - name: execute py script # run the run.py
       run: |
-        python run.py
+        pip install PyGithub |
+        python scripts/run.py
       env:
         COMMIT_SHA: ${{ github.event.push.commits.sha }} 
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
