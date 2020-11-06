@@ -10,7 +10,7 @@ commit   = repo.get_commit(os.environ.get('GITHUB_SHA'))
 pull_no = commit.get_pulls()[0].number
 pr = repo.get_pull(pull_no)
 
-#label_add = pr.add_to_labels('automated_pr')
+label_add = pr.add_to_labels('automated_pr')
 
 label_check = False
 for labels in pr.labels:
@@ -20,4 +20,4 @@ for labels in pr.labels:
 
 if label_check:
     review_pr = pr.create_review(event="APPROVE")
-    #merge_pr = pr.merge(commit_title="test automerge")
+    merge_pr = pr.merge(commit_title="test automerge")
