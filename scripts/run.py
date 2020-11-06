@@ -1,21 +1,22 @@
 from github import Github
 import os
 import requests
+import json
 
 g = Github(os.environ.get('GITHUB_TOKEN'))
-
-user    = g.get_user('PlucinskiP')
-repo    = user.get_repo("hello-github-actions")
+repo = g.get_repo('PlucinskiP/hello-github-actions')
 commit   = repo.get_commit(os.environ.get('GITHUB_SHA'))
-commit_no = commit.sha
+#commit_sha = commit.sha
 pull_no = commit.get_pulls()[0].number
 pr = repo.get_pull(pull_no)
 
 label_check = False
 for labels in pr.labels:
     if labels.name == 'automated_pr':
+        print(labels.name)
         label_check = True
 
 if label_check:
-    approve_pr = commit.get_pulls()[0].number.reviews( event="APPROVE" )
-    merge_pr = commit.get_pulls()[0].merge
+    tt = commit.get_pulls()
+    # review_pr = tt[0].create_review(event="APPROVE")
+    merge_pr = tt[0].merge(commit_title="test automerge")

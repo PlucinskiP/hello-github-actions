@@ -24,5 +24,5 @@ jobs:
         pip install PyGithub
         python scripts/run.py
       env:
-        #COMMIT_SHA: ${{ github.event.push.after }}
+        COMMIT_SHA: ${{ github.event.push.after }}
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
