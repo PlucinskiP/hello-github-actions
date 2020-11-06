@@ -1,12 +1,12 @@
 name: My test action
 
 on:
-  push
+  status
 
 jobs:
   my_test_action :
 
-#    if: contains(github.event.status.state.*.name, 'success')
+    if: contains(github.event.status.state.*.name, 'success')
 
     runs-on: ubuntu-latest
 
