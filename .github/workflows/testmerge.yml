@@ -13,17 +13,17 @@ jobs:
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v2 # checkout the repository content to github runner
+      uses: actions/checkout@v2
 
     - name: setup python
       uses: actions/setup-python@v2
 
-    - name: execute py script # run the run.py
+    - name: execute py script
       run: |
         echo $COMMIT_SHA
         echo $GITHUB_TOKEN
         pip install PyGithub
         python scripts/run.py
       env:
-        COMMIT_SHA: ${{ github.event.push.commits.sha }} 
+        COMMIT_SHA: ${{ github.event.push.after }} 
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
