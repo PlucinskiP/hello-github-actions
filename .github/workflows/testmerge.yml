@@ -20,10 +20,9 @@ jobs:
 
     - name: execute py script
       run: |
-        echo $COMMIT_SHA
-        echo $GITHUB_TOKEN
+        echo $GITHUB_SHA
         pip install PyGithub
         python scripts/run.py
       env:
-        COMMIT_SHA: ${{ github.event.push.after }} 
+        #COMMIT_SHA: ${{ github.event.push.after }}
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

@@ -6,7 +6,7 @@ g = Github(os.environ.get('GITHUB_TOKEN'))
 
 user    = g.get_user('PlucinskiP')
 repo    = user.get_repo("hello-github-actions")
-commit   = repo.get_commit(os.environ.get('COMMIT_SHA'))
+commit   = repo.get_commit(os.environ.get('GITHUB_SHA'))
 commit_no = commit.sha
 pull_no = commit.get_pulls()[0].number
 pr = repo.get_pull(pull_no)
