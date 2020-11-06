@@ -19,5 +19,5 @@ for labels in pr.labels:
         label_check = True
 
 if label_check:
-    review_pr = pr[0].create_review(event="APPROVE")
-    #merge_pr = pr[0].merge(commit_title="test automerge")
+    review_pr = pr.create_review(event="APPROVE")
+    #merge_pr = pr.merge(commit_title="test automerge")
