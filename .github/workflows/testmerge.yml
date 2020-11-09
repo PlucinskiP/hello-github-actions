@@ -5,11 +5,8 @@ on:
 
 jobs:
   my_test_action :
-
     if: contains(github.event.status.state.*.name, 'success')
-
     runs-on: ubuntu-latest
-
     steps:
 
     - name: Checkout
